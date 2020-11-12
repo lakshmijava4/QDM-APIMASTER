@@ -12,6 +12,6 @@ public interface CertificationService {
 
 	Certification updateCertification(Certification certification);
 
-	Certification findByCertificateId(int certificateId);
+	void findByCertificateId(int certificateId);
 
 }

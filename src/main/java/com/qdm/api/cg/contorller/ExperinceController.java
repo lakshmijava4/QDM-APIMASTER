@@ -85,7 +85,7 @@ public class ExperinceController {
 		}
 	}
 	
-	@DeleteMapping(value ="/deleteById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(value ="/deleteExperinceById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteById(@PathVariable("id") int id) {
 		try {
 			service.deleteExperienceById(id);

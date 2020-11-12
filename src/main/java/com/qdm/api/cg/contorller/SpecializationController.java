@@ -68,8 +68,8 @@ public class SpecializationController {
 			return response;
 		}
 	}
-	@PutMapping(value = "/updateCategory", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> updateCategoryById(@RequestBody SpecializationList specializationList) {
+	@PutMapping(value = "/updateSpecalization", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> updateSpecalizationById(@RequestBody SpecializationList specializationList) {
 		try {
 			SpecializationList specializationdto = specializationService.updateSpecialization(specializationList);
 			return new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),
@@ -81,7 +81,7 @@ public class SpecializationController {
 
 		}
 	}
-	@DeleteMapping(value ="/deleteById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(value ="/deleteSpecializationById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteById(@PathVariable("id") int id) {
 		try {
 			specializationService.deleteSpecialization(id);

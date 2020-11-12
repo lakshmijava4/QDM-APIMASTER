@@ -69,7 +69,7 @@ public class RoleController {
 			return response;
 		}
 	}
-	@PutMapping(value = "/updateCategory", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/updateRolebasesd", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> updateRoleById(@RequestBody Role role) {
 		try {
 			Role roledto = roleService.updateRoleById(role);

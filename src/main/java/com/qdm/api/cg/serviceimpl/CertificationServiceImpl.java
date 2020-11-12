@@ -46,10 +46,12 @@ public class CertificationServiceImpl implements CertificationService {
 	}
 
 	@Override
-	public Certification findByCertificateId(int certificateId) {
+	public void findByCertificateId(int certificateId) {
 		// TODO Auto-generated method stub
-		return certificationRepository.findByCertificateId(certificateId);
+		 certificationRepository.deleteById(certificateId);
 	}
+	
+	
 }
 
 

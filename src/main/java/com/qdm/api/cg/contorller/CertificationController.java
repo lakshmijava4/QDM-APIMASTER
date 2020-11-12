@@ -82,10 +82,10 @@ public class CertificationController {
 
 		}
 	}
-	@DeleteMapping(value ="/CertificationId/{certificateId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> deleteById(@PathVariable("certificateId") int certificateId) {
+	@DeleteMapping(value ="/deleteCertificationById/{certificateId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> findByCertificateId(@PathVariable("certificateId") int certificateId) {
 		try {
-			certificationService.findByCertificateId(certificateId	);
+			certificationService.findByCertificateId(certificateId);
 			return new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),
 					ResponseType.SUCCESS.getResponseCode(), "Deleted Successfully", "Record deleted"), HttpStatus.OK);
 		} catch (Exception e) {

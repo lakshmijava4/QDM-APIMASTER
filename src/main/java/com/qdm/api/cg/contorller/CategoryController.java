@@ -87,7 +87,7 @@ public class CategoryController {
 
 		}
 	}
-	@DeleteMapping(value ="/deleteById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(value ="/deleteCategoryById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteById(@PathVariable("id") int id) {
 		try {
 			categoryService.deleteById(id);
