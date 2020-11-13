@@ -28,11 +28,11 @@ public class Role implements Serializable {
 	private int roleId;
 	@Column(name = "Role_Name")
 	
-	private String role_name;
+	private String roleName;
 
 	public Role(String roleName) {
 		super();
-		this.role_name = roleName;
+		this.roleName = roleName;
 	}
 
 

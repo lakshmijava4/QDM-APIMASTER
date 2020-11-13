@@ -1,4 +1,4 @@
-package com.qdm.api.cg.contorller;
+package com.qdm.api.cg.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,8 +68,8 @@ public class SkillsController {
 			return response;
 		}
 	}
-	@PutMapping(value = "/updateCategory", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> updateRoleById(@RequestBody Skills skills) {
+	@PutMapping(value = "/updateSKills", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> updateSkillsById(@RequestBody Skills skills) {
 		try {
 			Skills skillsdto = skillsService.updateSkills(skills);
 			return new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),

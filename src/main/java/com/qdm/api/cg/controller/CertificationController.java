@@ -1,4 +1,4 @@
-package com.qdm.api.cg.contorller;
+package com.qdm.api.cg.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;

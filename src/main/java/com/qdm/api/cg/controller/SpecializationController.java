@@ -1,4 +1,4 @@
-package com.qdm.api.cg.contorller;
+package com.qdm.api.cg.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,29 +18,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.qdm.api.cg.entity.Certification;
-import com.qdm.api.cg.entity.Organization;
+import com.qdm.api.cg.entity.Category;
+import com.qdm.api.cg.entity.SpecializationList;
 import com.qdm.api.cg.response.ResponseInfo;
 import com.qdm.api.cg.response.ResponseType;
-import com.qdm.api.cg.service.OrganizationService;
+import com.qdm.api.cg.service.SpecializationService;
 
 @RestController
-@RequestMapping(value = { "/organization" })
+@RequestMapping(value = { "/specialization" })
 @SuppressWarnings({ "unused", "unchecked", "rawtypes" })
-public class OrganizationController {
-	
-
+public class SpecializationController {
 	@Autowired
-	OrganizationService organizationService;
+	SpecializationService specializationService;
 
-	@PostMapping(value = "/addOrganization", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
+	@PostMapping(value = "/addSpecializationList", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<?> addOrganizationList(@RequestBody Organization organization) {
+	public ResponseEntity<?> addSpecializationList(@RequestBody SpecializationList specialization) {
 		ResponseEntity response = null;
 		try {
-			Organization organizationData = organizationService.addOrganizationList(organization);
+			SpecializationList special = specializationService.addSpecializationList(specialization);
 			response = new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),
-					ResponseType.SUCCESS.getResponseCode(), "added sucessfully", organizationData), HttpStatus.CREATED);
+					ResponseType.SUCCESS.getResponseCode(), "added sucessfully", special), HttpStatus.CREATED);
 			return response;
 		} catch (Exception e) {
 			response = new ResponseEntity(new ResponseInfo(ResponseType.ERROR.getResponseMessage(),
@@ -49,20 +47,20 @@ public class OrganizationController {
 		}
 	}
 
-	@GetMapping(value = "/getOrganizationList", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getOrganizationList() {
+	@GetMapping(value = "/getSpecializationList", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getSpecializationList() {
 		ResponseEntity response = null;
 		try {
-			List<Organization> organizationList = organizationService.getOrganizationList();
+			List<SpecializationList> specializationList = specializationService.getSpecializationList();
 			List<Object> list=new ArrayList<Object>();
-			for (Organization organization : organizationList) {
+			for (SpecializationList specialization : specializationList) {
 				Map<String, Object> map=new HashMap<String, Object>();
-				map.put("label", organization.getOrganizationName());
-				map.put("value",organization.getOrganizationId());
+				map.put("label", specialization.getLabel());
+				map.put("value",specialization.getValue());
 				list.add(map);
 			}
 			response = new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),
-					ResponseType.SUCCESS.getResponseCode(), "getting records", list), HttpStatus.OK);
+					ResponseType.SUCCESS.getResponseCode(), "getting records sucessfully", list), HttpStatus.OK);
 			return response;
 		} catch (Exception e) {
 			response = new ResponseEntity(new ResponseInfo(ResponseType.ERROR.getResponseMessage(),
@@ -70,23 +68,23 @@ public class OrganizationController {
 			return response;
 		}
 	}
-	@PutMapping(value = "/updateOrganization", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> updateCategoryById(@RequestBody Organization organization) {
+	@PutMapping(value = "/updateSpecalization", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> updateSpecalizationById(@RequestBody SpecializationList specializationList) {
 		try {
-			Organization organizationres = organizationService.updateOrganization(organization);
+			SpecializationList specializationdto = specializationService.updateSpecialization(specializationList);
 			return new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),
-					ResponseType.SUCCESS.getResponseCode(), "", organizationres), HttpStatus.OK);
+					ResponseType.SUCCESS.getResponseCode(), "updated sucessfully", specializationdto), HttpStatus.OK);
 		} catch (Exception e) {
 
 			return new ResponseEntity(new ResponseInfo(ResponseType.ERROR.getResponseMessage(),
-					ResponseType.ERROR.getResponseCode(), "Try Again", null), HttpStatus.INTERNAL_SERVER_ERROR);
+					ResponseType.ERROR.getResponseCode(), "Try Again", "Error"), HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
 	}
-	@DeleteMapping(value ="/deleteorganization/{organizationId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> deleteorganizationById(@PathVariable("organizationId") int certificateId) {
+	@DeleteMapping(value ="/deleteSpecializationById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> deleteById(@PathVariable("id") int id) {
 		try {
-			organizationService.findByorganizationId(certificateId	);
+			specializationService.deleteSpecialization(id);
 			return new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),
 					ResponseType.SUCCESS.getResponseCode(), "Deleted Successfully", "Record deleted"), HttpStatus.OK);
 		} catch (Exception e) {

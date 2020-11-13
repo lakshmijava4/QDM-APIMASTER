@@ -1,4 +1,4 @@
-package com.qdm.api.cg.contorller;
+package com.qdm.api.cg.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,62 +19,64 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qdm.api.cg.entity.Category;
-import com.qdm.api.cg.entity.Role;
+import com.qdm.api.cg.entity.Experience;
+import com.qdm.api.cg.entity.Organization;
 import com.qdm.api.cg.response.ResponseInfo;
 import com.qdm.api.cg.response.ResponseType;
-import com.qdm.api.cg.service.RoleService;
+import com.qdm.api.cg.service.ExperinceService;
 
 @RestController
-@RequestMapping(value = { "/role" })
+@RequestMapping("/experince")
 @SuppressWarnings({ "unused", "unchecked", "rawtypes" })
-public class RoleController {
-
+public class ExperinceController {
+	
 	@Autowired
-	RoleService roleService;
-
-	@PostMapping(value = "/addRole", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
+	ExperinceService  service;
+	
+	@PostMapping(value = "/addExperincedemoList", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<?> addRoleList(@RequestBody Role role) {
+	public ResponseEntity<?> addExperinceddemoList(@RequestBody Experience experience) {
 		ResponseEntity response = null;
 		try {
-			Role roleData = roleService.addRoleList(role);
+			Experience categoryData = service.addExperinceddemoList(experience);
 			response = new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),
-					ResponseType.SUCCESS.getResponseCode(), "Role added sucessfully", roleData), HttpStatus.CREATED);
+					ResponseType.SUCCESS.getResponseCode(), "Experince List adding Successfully", "Adding Successfully"), HttpStatus.CREATED);
 			return response;
 		} catch (Exception e) {
 			response = new ResponseEntity(new ResponseInfo(ResponseType.ERROR.getResponseMessage(),
-					ResponseType.ERROR.getResponseCode(), "Try Again", "Error"), HttpStatus.INTERNAL_SERVER_ERROR);
+					ResponseType.ERROR.getResponseCode(), "Try Again", "Error while adding record"), HttpStatus.INTERNAL_SERVER_ERROR);
 			return response;
 		}
 	}
-
-	@GetMapping(value = "/getRoleList", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getRoleList() {
+	
+	@GetMapping(value = "/getExperinceList", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getExperinceList() {
 		ResponseEntity response = null;
 		try {
-			List<Role> roleList = roleService.getRoleList();
-			List<Object> list = new ArrayList<Object>();
-			for (Role role : roleList) {
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("label", role.getRole_name());
-				map.put("value", role.getRoleId());
+			List<Experience> categoryList = service.getExperinceList();
+			List<Object> list=new ArrayList<Object>();
+			for (Experience category : categoryList) {
+				Map<String, Object> map=new HashMap<String, Object>();
+				map.put("label", category.getEndingIn());
+				map.put("value",category.getOrganizationName());
 				list.add(map);
 			}
 			response = new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),
-					ResponseType.SUCCESS.getResponseCode(), "getting Records sucessfully", list), HttpStatus.OK);
+					ResponseType.SUCCESS.getResponseCode(), "got records", list), HttpStatus.OK);
 			return response;
 		} catch (Exception e) {
 			response = new ResponseEntity(new ResponseInfo(ResponseType.ERROR.getResponseMessage(),
-					ResponseType.ERROR.getResponseCode(), "Try Again", "Error"), HttpStatus.INTERNAL_SERVER_ERROR);
+					ResponseType.ERROR.getResponseCode(), "Try Again", "Erroor while fetching details"), HttpStatus.INTERNAL_SERVER_ERROR);
 			return response;
 		}
 	}
-	@PutMapping(value = "/updateRolebasesd", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> updateRoleById(@RequestBody Role role) {
+	
+	@PutMapping(value = "/updateExperince", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> updateExperince(@RequestBody Experience experience) {
 		try {
-			Role roledto = roleService.updateRoleById(role);
+			Experience experiencedto = service.updateExperinceDetails(experience);
 			return new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),
-					ResponseType.SUCCESS.getResponseCode(), "updated sucessfully", roledto), HttpStatus.OK);
+					ResponseType.SUCCESS.getResponseCode(), "updated sucessfully", experiencedto), HttpStatus.OK);
 		} catch (Exception e) {
 
 			return new ResponseEntity(new ResponseInfo(ResponseType.ERROR.getResponseMessage(),
@@ -82,16 +84,18 @@ public class RoleController {
 
 		}
 	}
-	@DeleteMapping(value ="/deleteRoleById/{roleId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> deleteRoleById(@PathVariable("roleId") int roleId) {
+	
+	@DeleteMapping(value ="/deleteExperinceById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> deleteById(@PathVariable("id") int id) {
 		try {
-			roleService.deleteRoleById(roleId);
+			service.deleteExperienceById(id);
 			return new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),
-					ResponseType.SUCCESS.getResponseCode(), "Deleted Successfully", "Record Deleted sucessfully"), HttpStatus.OK);
+					ResponseType.SUCCESS.getResponseCode(), "Deleted Successfully", "Record Deleted"), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(new ResponseInfo(ResponseType.ERROR.getResponseMessage(),
 					ResponseType.ERROR.getResponseCode(), "Try Again", "Error"), HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
 	}
+
 }
