@@ -14,4 +14,6 @@ public interface CertificationService {
 
 	void findByCertificateId(int certificateId);
 
+	void softdeletecertification(Integer certificateId, boolean status);
+
 }

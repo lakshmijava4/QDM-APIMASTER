@@ -25,10 +25,13 @@ public class Role implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Role_ID")
-	private int roleId;
+	private Integer roleId;
 	@Column(name = "Role_Name")
 	
 	private String roleName;
+	
+	@Column(name="is_deleted")
+	private boolean isDeleted;
 
 	public Role(String roleName) {
 		super();

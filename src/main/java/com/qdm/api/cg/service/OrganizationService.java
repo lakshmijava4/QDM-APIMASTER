@@ -9,4 +9,5 @@ public interface OrganizationService {
 	List<Organization> getOrganizationList();
 	Organization updateOrganization(Organization organization);
 	Organization findByorganizationId(int organizationId);
+	void softdeleteOragnization(Integer organizationId, boolean status);
 }

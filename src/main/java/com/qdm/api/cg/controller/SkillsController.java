@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.qdm.api.cg.entity.Role;
+import com.qdm.api.cg.dto.SkillsDTO;
 import com.qdm.api.cg.entity.Skills;
 import com.qdm.api.cg.response.ResponseInfo;
 import com.qdm.api.cg.response.ResponseType;
@@ -81,6 +81,20 @@ public class SkillsController {
 
 		}
 	}
+	
+	//Soft delete operation
+		@PutMapping("/deleteSkills")
+		public ResponseEntity<?> softdeletecskills(@RequestBody SkillsDTO skillsDTO) {
+			try {
+				skillsService.softdeletecskills(skillsDTO.getId(),skillsDTO.isStatus());
+				return new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),
+						ResponseType.SUCCESS.getResponseCode(), "soft  record  deleted sucessfully ", "soft deleting  done"), HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity(new ResponseInfo(ResponseType.ERROR.getResponseMessage(),
+						ResponseType.ERROR.getResponseCode(), "Try Again", "softdeleted Not able to delete"), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+	
 	@DeleteMapping(value ="/deleteSkillsById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteRoleById(@PathVariable("id") int id) {
 		try {

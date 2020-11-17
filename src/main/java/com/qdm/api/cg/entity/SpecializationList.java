@@ -24,4 +24,7 @@ public class SpecializationList {
 	
 	@Column(name="Specialization_name")
 	String label;
+	
+	@Column(name="is_deleted")
+	private boolean isDeleted;
 }

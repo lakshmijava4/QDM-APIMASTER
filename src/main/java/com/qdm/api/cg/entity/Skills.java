@@ -25,13 +25,16 @@ public class Skills implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	int id;
+	private Integer id;
 
 	@Column(name = "Skill_ID")
-	int skillId;
+	private Integer skillId;
 
 	@Column(name = "Skill_Name")
-	String skillName;
+	private String skillName;
+	
+	@Column(name="is_deleted")
+	private boolean isDeleted;
 
 }
 

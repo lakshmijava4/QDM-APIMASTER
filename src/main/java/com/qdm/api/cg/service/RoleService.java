@@ -10,5 +10,6 @@ public interface RoleService {
 	List<Role> getRoleList();
 	Role updateRoleById(Role role);
 	void deleteRoleById(int roleId);
+	void softdeleteRole(Integer roleId, boolean status);
 
 }

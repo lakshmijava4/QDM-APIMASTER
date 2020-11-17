@@ -18,9 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.qdm.api.cg.entity.Category;
+import com.qdm.api.cg.dto.ExperienceDTO;
 import com.qdm.api.cg.entity.Experience;
-import com.qdm.api.cg.entity.Organization;
 import com.qdm.api.cg.response.ResponseInfo;
 import com.qdm.api.cg.response.ResponseType;
 import com.qdm.api.cg.service.ExperinceService;
@@ -31,14 +30,14 @@ import com.qdm.api.cg.service.ExperinceService;
 public class ExperinceController {
 	
 	@Autowired
-	ExperinceService  service;
+	ExperinceService  experinceService;
 	
 	@PostMapping(value = "/addExperincedemoList", produces = { MediaType.APPLICATION_JSON_VALUE }, consumes = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<?> addExperinceddemoList(@RequestBody Experience experience) {
 		ResponseEntity response = null;
 		try {
-			Experience categoryData = service.addExperinceddemoList(experience);
+			Experience categoryData = experinceService.addExperinceddemoList(experience);
 			response = new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),
 					ResponseType.SUCCESS.getResponseCode(), "Experince List adding Successfully", "Adding Successfully"), HttpStatus.CREATED);
 			return response;
@@ -53,7 +52,7 @@ public class ExperinceController {
 	public ResponseEntity<?> getExperinceList() {
 		ResponseEntity response = null;
 		try {
-			List<Experience> categoryList = service.getExperinceList();
+			List<Experience> categoryList = experinceService.getExperinceList();
 			List<Object> list=new ArrayList<Object>();
 			for (Experience category : categoryList) {
 				Map<String, Object> map=new HashMap<String, Object>();
@@ -74,7 +73,7 @@ public class ExperinceController {
 	@PutMapping(value = "/updateExperince", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> updateExperince(@RequestBody Experience experience) {
 		try {
-			Experience experiencedto = service.updateExperinceDetails(experience);
+			Experience experiencedto = experinceService.updateExperinceDetails(experience);
 			return new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),
 					ResponseType.SUCCESS.getResponseCode(), "updated sucessfully", experiencedto), HttpStatus.OK);
 		} catch (Exception e) {
@@ -84,11 +83,23 @@ public class ExperinceController {
 
 		}
 	}
+	//Soft delete operation
+	@PutMapping("/deletecertification")
+	public ResponseEntity<?> softdeletexperince(@RequestBody ExperienceDTO experienceDTO) {
+		try {
+			experinceService.softdeletexperince(experienceDTO.getId(),experienceDTO.isStatus());
+			return new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),
+					ResponseType.SUCCESS.getResponseCode(), "soft  record  deleted sucessfully ", "soft deleting  done"), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity(new ResponseInfo(ResponseType.ERROR.getResponseMessage(),
+					ResponseType.ERROR.getResponseCode(), "Try Again", "softdeleted Not able to delete"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
 	@DeleteMapping(value ="/deleteExperinceById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteById(@PathVariable("id") int id) {
 		try {
-			service.deleteExperienceById(id);
+			experinceService.deleteExperienceById(id);
 			return new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),
 					ResponseType.SUCCESS.getResponseCode(), "Deleted Successfully", "Record Deleted"), HttpStatus.OK);
 		} catch (Exception e) {

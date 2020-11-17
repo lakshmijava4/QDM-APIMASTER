@@ -13,6 +13,8 @@ public interface ExperinceService {
 
 	void deleteExperienceById(int id);
 
+	void softdeletexperince(Integer id, boolean status);
+
 	
 
 }

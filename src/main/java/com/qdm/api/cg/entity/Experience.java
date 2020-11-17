@@ -46,6 +46,9 @@ public class Experience  implements Serializable {
 
 	@Column(name = "Order_No")
 	int orderNo;
+	
+	@Column(name="is_deleted")
+	private boolean isDeleted;
 
 	public Experience(int orderNo) {
 		super();

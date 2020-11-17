@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.qdm.api.cg.entity.Certification;
+import com.qdm.api.cg.dto.OrganizationDTO;
 import com.qdm.api.cg.entity.Organization;
 import com.qdm.api.cg.response.ResponseInfo;
 import com.qdm.api.cg.response.ResponseType;
@@ -81,6 +81,19 @@ public class OrganizationController {
 			return new ResponseEntity(new ResponseInfo(ResponseType.ERROR.getResponseMessage(),
 					ResponseType.ERROR.getResponseCode(), "Try Again", null), HttpStatus.INTERNAL_SERVER_ERROR);
 
+		}
+	}
+	
+	//Soft delete operation
+	@PutMapping("/deleteOrganization")
+	public ResponseEntity<?> softdeleteOragnization(@RequestBody OrganizationDTO organizationDTO) {
+		try {
+			organizationService.softdeleteOragnization(organizationDTO.getOrganizationId(),organizationDTO.isStatus());
+			return new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),
+					ResponseType.SUCCESS.getResponseCode(), "soft  record  deleted sucessfully ", "soft deleting  done"), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity(new ResponseInfo(ResponseType.ERROR.getResponseMessage(),
+					ResponseType.ERROR.getResponseCode(), "Try Again", "softdeleted Not able to delete"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	@DeleteMapping(value ="/deleteorganization/{organizationId}", produces = MediaType.APPLICATION_JSON_VALUE)

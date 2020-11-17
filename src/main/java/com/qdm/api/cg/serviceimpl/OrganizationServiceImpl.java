@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.qdm.api.cg.entity.Certification;
 import com.qdm.api.cg.entity.Organization;
 import com.qdm.api.cg.repository.OrganizationRepository;
 import com.qdm.api.cg.service.OrganizationService;
@@ -47,5 +48,19 @@ public class OrganizationServiceImpl implements OrganizationService{
 		return organizationRepository.findByOrganizationId(organizationId);
 
 	}
+	@Override
+	public void softdeleteOragnization(Integer organizationId, boolean status) {
+		// TODO Auto-generated method stub
+		Organization organizationres = organizationRepository.getOne(organizationId);
+		if (status) {
+			organizationres.setDeleted(true);
+		} else {
+			organizationres.setDeleted(false);
+		}
+		organizationRepository.save(organizationres);
+		
+	}
+		
+	}
 
-}
+

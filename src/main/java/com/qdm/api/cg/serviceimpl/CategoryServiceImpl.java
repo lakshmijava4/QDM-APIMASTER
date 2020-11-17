@@ -1,6 +1,5 @@
 package com.qdm.api.cg.serviceimpl;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -46,11 +45,28 @@ public class CategoryServiceImpl implements CategoryService {
 		return null;
 	}
 
+	
 	@Override
-	public void deleteById(int id) {
+	public void deleteById(Integer id) {
 		categoryRepository.deleteById(id);
 	}
 
 
-}
+	
+
+	@Override
+	public void softdeleteCategory(Integer id, boolean status) {
+			Category category = categoryRepository.getOne(id);
+			if (status) {
+				category.setDeleted(true);
+			} else {
+				category.setDeleted(false);
+			}
+			categoryRepository.save(category);
+		}
+		
+	}
+
+
+	
 

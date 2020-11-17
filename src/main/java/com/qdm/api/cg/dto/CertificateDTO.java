@@ -11,14 +11,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class CertificateDTO {
-	
-	int id;
-	int certificateId;
-	String certificateName;
-	int organizationId;
-	String organizationName;
-	String startingFrom;
-	String endingIn;
-	int orderNo;
+
+	private String certificateName;
+	private int organizationId;
+	private String organizationName;
+	private String startingFrom;
+	private String endingIn;
+	private int orderNo;
+
+	private Integer certificateId;
+	private boolean status;
+	private boolean is_deleted;
 
 }

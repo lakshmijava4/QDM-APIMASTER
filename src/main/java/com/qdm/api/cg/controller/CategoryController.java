@@ -6,12 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qdm.api.cg.dto.CategoryDTO;
 import com.qdm.api.cg.entity.Category;
 import com.qdm.api.cg.response.ResponseInfo;
 import com.qdm.api.cg.response.ResponseType;
 import com.qdm.api.cg.service.CategoryService;
+
 
 
 @RestController
@@ -87,6 +86,20 @@ public class CategoryController {
 
 		}
 	}
+	
+	//Soft delete operation
+	@PutMapping("/delete")
+	public ResponseEntity<?> softdeleteCategory(@RequestBody CategoryDTO categoryDTO) {
+		try {
+			categoryService.softdeleteCategory(categoryDTO.getCategoryId(),categoryDTO.isStatus());
+			return new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),
+					ResponseType.SUCCESS.getResponseCode(), "soft  record  deleted sucessfully ", "soft deleting  done "), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity(new ResponseInfo(ResponseType.ERROR.getResponseMessage(),
+					ResponseType.ERROR.getResponseCode(), "Try Again", "softdeleted Not able to sucessfully"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	@DeleteMapping(value ="/deleteCategoryById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteById(@PathVariable("id") int id) {
 		try {

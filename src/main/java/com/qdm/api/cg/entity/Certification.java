@@ -26,6 +26,12 @@ public class Certification {
 	
 	@Column(name="Certificate_Name")
 	private String certificateName;
+	
+	@Column(name="is_deleted")
+	private boolean isDeleted;
+	
+	@Column(name="status")
+	private boolean status;
 
 	
 }

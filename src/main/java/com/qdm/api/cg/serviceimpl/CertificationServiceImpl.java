@@ -50,6 +50,19 @@ public class CertificationServiceImpl implements CertificationService {
 		// TODO Auto-generated method stub
 		 certificationRepository.deleteById(certificateId);
 	}
+
+	@Override
+	public void softdeletecertification(Integer certificateId, boolean status) {
+		// TODO Auto-generated method stub
+		Certification certificationRes = certificationRepository.getOne(certificateId);
+		if (status) {
+			certificationRes.setDeleted(true);
+		} else {
+			certificationRes.setDeleted(false);
+		}
+		certificationRepository.save(certificationRes);
+		
+	}
 	
 	
 }

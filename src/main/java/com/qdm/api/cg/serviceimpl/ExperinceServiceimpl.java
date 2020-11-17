@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.qdm.api.cg.entity.Experience;
-import com.qdm.api.cg.entity.Organization;
 import com.qdm.api.cg.repository.ExperienceRepository;
 import com.qdm.api.cg.service.ExperinceService;
 @Service
@@ -20,16 +19,16 @@ public class ExperinceServiceimpl implements ExperinceService {
 	ModelMapper modelMapper;
 
 	@Autowired
-	ExperienceRepository repo;
+	ExperienceRepository experienceRepository;
 	
 
 	@Override
 	public Experience addExperinceddemoList(Experience experince) {
-		Experience categoryById = repo.findById(experince.getId());
+		Experience categoryById = experienceRepository.findById(experince.getId());
 		if (categoryById != null) {
 			return null;
 		} else {
-			return repo.save(experince);
+			return experienceRepository.save(experince);
 		}
 	}
 
@@ -37,7 +36,7 @@ public class ExperinceServiceimpl implements ExperinceService {
 	@Override
 	public List<Experience> getExperinceList() {
 		// TODO Auto-generated method stub
-		return repo.findAll();
+		return experienceRepository.findAll();
 	}
 
 
@@ -45,7 +44,7 @@ public class ExperinceServiceimpl implements ExperinceService {
 	public Experience updateExperinceDetails(Experience experience) {
 		Experience experienceList = modelMapper.map(experience, Experience.class);
 		if(experience.getId()!=0){
-			return repo.save(experienceList);
+			return experienceRepository.save(experienceList);
 		}
 		return null;
 	}
@@ -53,6 +52,20 @@ public class ExperinceServiceimpl implements ExperinceService {
 
 	@Override
 	public void deleteExperienceById(int id) {
-		repo.deleteById(id);
+		experienceRepository.deleteById(id);
+	}
+
+
+	@Override
+	public void softdeletexperince(Integer id, boolean status) {
+		// TODO Auto-generated method stub
+		Experience experience = experienceRepository.getOne(id);
+		if (status) {
+			experience.setDeleted(true);
+		} else {
+			experience.setDeleted(false);
+		}
+		experienceRepository.save(experience);
+		
 	}
 }

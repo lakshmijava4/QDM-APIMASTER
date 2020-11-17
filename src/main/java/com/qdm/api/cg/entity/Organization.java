@@ -30,6 +30,9 @@ public class Organization  implements Serializable {
 
 	@Column(name = "Organization_Name")
 	private String organizationName;
+	
+	@Column(name="is_deleted")
+	private boolean isDeleted;
 
 	public Organization(String organizationName) {
 		super();

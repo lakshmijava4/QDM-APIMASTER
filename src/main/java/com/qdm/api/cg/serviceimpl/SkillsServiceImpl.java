@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.qdm.api.cg.entity.Role;
 import com.qdm.api.cg.entity.Skills;
 import com.qdm.api.cg.repository.SkillsRepository;
 import com.qdm.api.cg.service.SkillsService;
@@ -49,6 +50,20 @@ public class SkillsServiceImpl implements SkillsService{
 		public void deleteSkillsById(int id) {
 			skillsRepository.deleteById(id);
 		}
+
+		@Override
+		public void softdeletecskills(Integer id, boolean status) {
+			// TODO Auto-generated method stub
+			Skills skills = skillsRepository.getOne(id);
+			if (status) {
+				skills.setDeleted(true);
+			} else {
+				skills.setDeleted(false);
+			}
+			skillsRepository.save(skills);
+
+		}
+
 	}
 
 

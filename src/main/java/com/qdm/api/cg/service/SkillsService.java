@@ -14,4 +14,6 @@ public interface SkillsService {
 
 	void deleteSkillsById(int id);
 
+	void softdeletecskills(Integer id, boolean status);
+
 }

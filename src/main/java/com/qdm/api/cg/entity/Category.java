@@ -18,19 +18,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Table(name = "TB_CATEGORY_LIST")
+
 public class Category implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	 int id;
-
-	@Column(name = "Category_ID")
-	int categoryId;
+	@Column(name="Category_Id")
+	private  Integer categoryId;
 
 	@Column(name = "Category_Name")
-	String categoryName;
+	private String categoryName;
 
+	@Column(name="is_deleted")
+	private boolean isDeleted;
+	
+	
+	
+	
 }

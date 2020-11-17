@@ -8,7 +8,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.qdm.api.cg.entity.Certification;
 import com.qdm.api.cg.entity.Role;
 import com.qdm.api.cg.repository.RoleRepository;
 import com.qdm.api.cg.service.RoleService;
@@ -51,6 +50,19 @@ public class RoleServiceImpl implements RoleService {
 	public void deleteRoleById(int roleId) {
 		// TODO Auto-generated method stub
 		roleRepository.deleteById(roleId);
+	}
+
+	@Override
+	public void softdeleteRole(Integer roleId, boolean status) {
+		// TODO Auto-generated method stub
+		Role role = roleRepository.getOne(roleId);
+		if (status) {
+			role.setDeleted(true);
+		} else {
+			role.setDeleted(false);
+		}
+		roleRepository.save(role);
+
 	}
 
 }

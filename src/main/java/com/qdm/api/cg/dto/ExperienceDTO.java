@@ -12,13 +12,15 @@ import lombok.NoArgsConstructor;
 @Data
 public class ExperienceDTO {
 
-	int id;
-	int roleId;
-	String roleName;
-	int organizationId;
-	String organizationName;
-	String startingFrom;
-	String endingIn;
-	int orderNo;
+	private Integer id;
+	private Integer roleId;
+	private String roleName;
+	private Integer organizationId;
+	private String organizationName;
+	private String startingFrom;
+	private String endingIn;
+	private Integer orderNo;
+	private boolean status;
+	private boolean isDeleted;
 
 }

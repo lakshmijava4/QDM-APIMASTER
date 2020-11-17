@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.qdm.api.cg.entity.Category;
+import com.qdm.api.cg.dto.RoleDTO;
 import com.qdm.api.cg.entity.Role;
 import com.qdm.api.cg.response.ResponseInfo;
 import com.qdm.api.cg.response.ResponseType;
@@ -69,6 +69,7 @@ public class RoleController {
 			return response;
 		}
 	}
+	
 	@PutMapping(value = "/updateRole", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> updateRoleById(@RequestBody Role role) {
 		try {
@@ -82,6 +83,21 @@ public class RoleController {
 
 		}
 	}
+	
+	//Soft delete operation
+		@PutMapping("/softdeleteRole")
+		public ResponseEntity<?> softdeleteRole(@RequestBody RoleDTO roleDTO) {
+			try {
+				roleService.softdeleteRole(roleDTO.getRoleId(),roleDTO.isStatus());
+				return new ResponseEntity(new ResponseInfo(ResponseType.SUCCESS.getResponseMessage(),
+						ResponseType.SUCCESS.getResponseCode(), "soft  record  deleted sucessfully ", "soft deleting  done"), HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity(new ResponseInfo(ResponseType.ERROR.getResponseMessage(),
+						ResponseType.ERROR.getResponseCode(), "Try Again", "softdeleted Not able to delete"), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+	
+	
 	@DeleteMapping(value ="/deleteRoleById/{roleId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteRoleById(@PathVariable("roleId") int roleId) {
 		try {

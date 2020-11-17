@@ -8,8 +8,9 @@ public interface CategoryService {
 	Category addCategoryList(Category category);
 	List<Category> getCategoryList();
 	Category updateCategory(Category categoryId);
-	void deleteById(int id);
-
+	void softdeleteCategory(Integer id, boolean status);
+	void deleteById(Integer id); 
+	
 	
 
 }
